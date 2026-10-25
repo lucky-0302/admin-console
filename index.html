@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>ADMIN CONSOLE</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      background: #000;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: #d8d8d8;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    .terminal {
+      width: 340px;
+      max-width: 100%;
+    }
+
+    .status {
+      color: #666;
+      font-size: 11px;
+      margin-bottom: 35px;
+      letter-spacing: 1px;
+    }
+
+    .prompt {
+      margin-bottom: 20px;
+      line-height: 1.9;
+    }
+
+    .credits {
+      color: #555;
+      font-size: 10px;
+      line-height: 1.8;
+      margin-top: -10px;
+      margin-bottom: 25px;
+      overflow-wrap: anywhere;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      background: #000;
+      color: #eee;
+      border: 1px solid #333;
+      border-radius: 0;
+      padding: 13px;
+      margin-bottom: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #555;
+    }
+
+    input:focus {
+      border-color: #777;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 0;
+      color: #aaa;
+      font-family: inherit;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1b1b1b;
+      color: #fff;
+    }
+
+    button:focus-visible {
+      outline: 1px solid #aaa;
+      outline-offset: 3px;
+    }
+
+    .error {
+      color: #888;
+      margin-top: 18px;
+      min-height: 16px;
+      line-height: 1.8;
+      font-size: 12px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .reveal {
+      color: #ddd;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .sub {
+      color: #888;
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 2;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 400px) {
+      body {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="terminal" id="login">
+    <div class="status">
+      SYSTEM CONSOLE // RESTRICTED ACCESS
+    </div>
+
+    <div class="prompt">
+      관리자 탭에 입장하시려면<br>
+      비밀번호를 눌러주세요.
+    </div>
+
+    <div class="credits">
+      made by 서후 다은 수혁 하린 하영 서아 민재 아영 도율
+    </div>
+
+    <form id="auth">
+      <input
+        id="password"
+        type="password"
+        placeholder="PASSWORD"
+        aria-label="비밀번호"
+        autocomplete="off"
+        required
+      >
+
+      <button type="submit">
+        AUTHENTICATE
+      </button>
+    </form>
+
+    <div
+      class="error"
+      id="error"
+      role="status"
+      aria-live="polite"
+    ></div>
+  </main>
+
+  <main class="terminal hidden" id="success">
+    <div class="status">
+      AUTHENTICATION SUCCESSFUL
+    </div>
+
+    <div class="reveal">
+      Error code : 301
+    </div>
+
+    <div class="sub">
+      (IP 주소가 관리자가 아닌 것으로 확인됨.)<br>
+      다시 시도해주세요.
+    </div>
+  </main>
+
+  <script>
+    "use strict";
+
+    const form = document.getElementById("auth");
+    const password = document.getElementById("password");
+    const error = document.getElementById("error");
+    const login = document.getElementById("login");
+    const success = document.getElementById("success");
+
+    const ADMIN_PASSWORD = "3141592";
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      if (password.value === ADMIN_PASSWORD) {
+        login.classList.add("hidden");
+        success.classList.remove("hidden");
+        password.value = "";
+      } else {
+        error.textContent =
+          "ACCESS DENIED. INVALID CREDENTIALS.";
+
+        password.value = "";
+        password.focus();
+      }
+    });
+  </script>
+
+</body>
+</html>
